@@ -8,7 +8,11 @@ describe('pickup return resolver', () => {
       results: [{
         lat: 56.0293,
         lon: 14.1567,
-        formatted: 'Gillesgatan 10, 291 33 Kristianstad, Sweden'
+        formatted: 'Gillesgatan 10, 291 33 Kristianstad, Sweden',
+        street: 'Gillesgatan',
+        housenumber: '10',
+        postcode: '291 33',
+        city: 'Kristianstad'
       }]
     }), { status: 200 }));
 
