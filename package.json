@@ -1,0 +1,19 @@
+{
+  "name": "car-care-geo",
+  "version": "0.1.0",
+  "private": false,
+  "description": "AI-assisted vehicle pickup, address validation and driver routing with Geoapify",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}
