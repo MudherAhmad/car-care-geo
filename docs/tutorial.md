@@ -43,6 +43,14 @@ GEOAPIFY_API_KEY=your_own_geoapify_key
 
 Never commit `.env` or a real API key.
 
+Before making live requests, load the local file into your current shell:
+
+```bash
+set -a
+. ./.env
+set +a
+```
+
 ## 3. Structured Swedish address input
 
 The public address model keeps street, house number, postal code and city as separate fields before building a canonical address.
