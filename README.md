@@ -91,6 +91,14 @@ Validated coordinates are used to resolve driving routes between pickup, service
 
 The routing layer provides spatial facts that higher-level systems can consume without transferring business authority to the geospatial provider.
 
+## Smart Dispatch demonstration
+
+The screenshot below shows the sanitized Smart Dispatch flow used in the Car Care platform. Geoapify Route Matrix provides spatial evidence such as route ETA and distance for an available driver, while the final assignment remains an explicit Car Care application action.
+
+![Smart Dispatch recommendation using Geoapify Route Matrix](docs/images/smart-dispatch-recommendation-demo.png)
+
+*Sanitized demonstration data: Geoapify ranks an available driver by ETA and distance; Car Care retains final assignment authority.*
+
 ## Production context
 
 The private Car Care Sverige platform contains a broader mobility architecture including:
@@ -116,6 +124,9 @@ car-care-geo/
 ├── docs/
 │   ├── ai-workflow.md
 │   ├── architecture.md
+│   ├── geoapify-feedback.md
+│   ├── images/
+│   │   └── smart-dispatch-recommendation-demo.png
 │   └── tutorial.md
 ├── src/
 │   ├── address/
@@ -267,6 +278,7 @@ Additional documentation lives under `docs/`:
 - `docs/architecture.md` — detailed architecture
 - `docs/tutorial.md` — public walkthrough
 - `docs/ai-workflow.md` — AI workflow and prompt documentation
+- `docs/geoapify-feedback.md` — Geoapify integration feedback and lessons learned
 
 These are expanded separately from the main README.
 
