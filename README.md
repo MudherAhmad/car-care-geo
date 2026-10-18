@@ -36,6 +36,8 @@ The public repository demonstrates:
 - pickup and return resolution
 - same-address pickup/return handling
 - Geoapify driving routing
+- Geoapify Route Matrix comparison for eligible drivers
+- deterministic Smart Dispatch ranking by driving ETA, then distance
 - automated regression tests
 - reproducible CI verification
 
@@ -52,6 +54,11 @@ flowchart LR
     E --> F[Pickup / return resolver]
     F --> G[Geoapify Routing]
     G --> H[Distance + duration + route]
+
+    I[Application-approved driver candidates] --> J[Geoapify Route Matrix]
+    E --> J
+    J --> K[ETA + distance ranking]
+    K --> L[Recommendation only]
 ```
 
 ## Authority boundary
@@ -90,6 +97,22 @@ Returned Geoapify candidates are validated before coordinates are accepted. This
 Validated coordinates are used to resolve driving routes between pickup, service and return locations.
 
 The routing layer provides spatial facts that higher-level systems can consume without transferring business authority to the geospatial provider.
+
+### Route Matrix and Smart Dispatch
+
+The public Smart Dispatch reference accepts only driver candidates that have already passed application-owned eligibility checks.
+
+Geoapify Route Matrix compares those candidates against the pickup location using road distance and driving ETA.
+
+Usable candidates are ranked deterministically:
+
+1. lowest driving ETA
+2. lowest driving distance when ETA is equal
+3. stable driver identifier as a final deterministic tie-breaker
+
+An unreachable matrix cell remains unavailable spatial evidence. The implementation does not invent a route.
+
+The result is a recommendation only. Geoapify does not decide driver availability, booking conflicts, permissions or final assignment.
 
 ## Smart Dispatch demonstration
 
@@ -190,8 +213,8 @@ npm test
 Expected reference result:
 
 ```text
-Test Files  5 passed (5)
-Tests       8 passed (8)
+Test Files  7 passed (7)
+Tests       16 passed (16)
 ```
 
 Build the TypeScript project:
@@ -243,6 +266,8 @@ The public tests cover:
 - pickup/return resolution
 - Geoapify routing behavior
 - booking-route resolution
+- Geoapify Route Matrix request and response validation
+- deterministic Smart Dispatch driver ranking by ETA and distance
 
 Vitest is configured to execute source tests only. Compiled tests under `dist/` are excluded to prevent duplicate execution after a build.
 

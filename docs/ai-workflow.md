@@ -165,13 +165,15 @@ git diff --check
 git status --short
 ```
 
-The current reference suite contains five test files and eight tests covering:
+The current reference suite contains seven test files and sixteen tests covering:
 
 - Swedish address normalization and validation
 - strict Geoapify geocoding matching
 - pickup and return address resolution
 - Geoapify routing validation
 - booking route aggregation
+- Geoapify Route Matrix request and response validation
+- deterministic Smart Dispatch ranking by driving ETA and distance
 
 A change is accepted only when the relevant tests pass, the TypeScript build succeeds, the dependency audit remains clean at the configured threshold, and the final diff matches the intended scope.
 

@@ -1,6 +1,6 @@
 # Tutorial
 
-This walkthrough reproduces the public Car Care Geo geospatial flow from structured address input to a validated driving route.
+This walkthrough reproduces the public Car Care Geo geospatial flow from structured address input to validated driving routes and a reproducible Route Matrix driver recommendation.
 
 > **Geoapify solves the spatial problem. The Car Care platform remains the business authority.**
 
@@ -234,7 +234,38 @@ The resolver performs two routing requests and combines both route legs into one
 For example, the automated test verifies route legs of `4.23 km` and `4.2 km`, producing `8.43 km` total and `14.3` total minutes.
 
 This summary is spatial information only. Booking, pricing, membership, capacity and driver-assignment decisions remain outside the Geoapify layer.
-## 8. Error handling
+## 8. Compare eligible drivers with Geoapify Route Matrix
+
+Smart Dispatch asks a second spatial question:
+
+> Among drivers already declared eligible by the application, which driver has the lowest driving cost to the pickup location?
+
+Eligibility remains application-owned. Availability, booking conflicts, permissions and location-freshness rules are resolved before Geoapify is called.
+
+`GeoapifyRouteMatrixClient` sends the eligible driver coordinates as sources and the pickup coordinate as the target.
+
+The request uses:
+
+- `mode=drive`
+- `type=balanced`
+- `traffic=approximated`
+- `units=metric`
+
+Each usable matrix result provides road distance and driving ETA.
+
+The public Smart Dispatch reference ranks candidates by:
+
+1. lowest driving ETA
+2. lowest driving distance when ETA is equal
+3. stable driver identifier as the final deterministic tie-breaker
+
+Unreachable cells remain unavailable spatial evidence. If no usable route exists, no driver is recommended.
+
+If Route Matrix is unavailable, the recommendation degrades safely instead of guessing.
+
+Geoapify provides the spatial evidence only. Final driver assignment remains a Car Care application decision.
+
+## 9. Error handling
 
 The public reference implementation fails explicitly instead of silently accepting uncertain spatial data.
 
@@ -252,6 +283,13 @@ The main validation and Geoapify errors are:
 - `INVALID_ROUTE_DESTINATION`
 - `GEOAPIFY_ROUTING_HTTP_<status>`
 - `ROUTE_NOT_RESOLVED`
+- `INVALID_ROUTE_MATRIX_SOURCES`
+- `INVALID_ROUTE_MATRIX_SOURCE_<index>`
+- `INVALID_ROUTE_MATRIX_TARGET`
+- `DUPLICATE_ROUTE_MATRIX_SOURCE_ID`
+- `ROUTE_MATRIX_TOO_MANY_SOURCES`
+- `GEOAPIFY_ROUTE_MATRIX_HTTP_<status>`
+- `ROUTE_MATRIX_NOT_RESOLVED`
 
 This behavior is intentional.
 
@@ -259,7 +297,7 @@ A booking flow should not continue with an unresolved address, invalid coordinat
 
 The geospatial layer therefore returns validated spatial facts or a clear failure. It does not guess, mutate booking state or make business-authority decisions.
 
-## 9. Verify the walkthrough
+## 10. Verify the walkthrough
 
 The repository is designed so that the public reference flow can be verified without production credentials.
 
@@ -272,8 +310,8 @@ npm test
 The current suite should report:
 
 ```text
-Test Files  5 passed (5)
-Tests       8 passed (8)
+Test Files  7 passed (7)
+Tests       16 passed (16)
 ```
 
 Build the TypeScript project:
@@ -288,11 +326,11 @@ Check the dependency tree:
 npm audit --audit-level=moderate
 ```
 
-A successful verification confirms the public implementation can normalize addresses, enforce strict geocoding matches, handle pickup/return behavior, resolve driving routes and aggregate booking-level route summaries.
+A successful verification confirms the public implementation can normalize addresses, enforce strict geocoding matches, handle pickup/return behavior, resolve driving routes, aggregate booking-level route summaries, validate Geoapify Route Matrix responses and rank already-eligible driver candidates deterministically by road ETA and distance.
 
 The automated tests mock external HTTP responses, so they do not require a real Geoapify API key. A real API key is needed only when making live Geoapify requests.
 
-## 10. End-to-end flow
+## 11. End-to-end flow
 
 The complete public walkthrough is:
 
@@ -302,7 +340,10 @@ The complete public walkthrough is:
 4. Reuse the validated pickup location when the return address is the same.
 5. Resolve driving routes with Geoapify Routing.
 6. Combine route legs into a booking-level spatial summary.
-7. Return spatial facts to the surrounding application.
+7. Send already-eligible driver candidates and the pickup target to Geoapify Route Matrix.
+8. Rank usable candidates by driving ETA, then distance.
+9. Return a spatial recommendation without performing driver assignment.
+10. Return spatial facts to the surrounding application.
 
 At that boundary, Geoapify has solved the spatial problem. The Car Care platform remains responsible for business rules and state changes.
 
