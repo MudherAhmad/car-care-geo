@@ -148,6 +148,7 @@ car-care-geo/
 │   ├── ai-workflow.md
 │   ├── architecture.md
 │   ├── geoapify-feedback.md
+│   ├── mcp-setup.md
 │   ├── images/
 │   │   └── smart-dispatch-recommendation-demo.png
 │   └── tutorial.md
@@ -295,6 +296,16 @@ AI is not the production authority for booking mutation, membership entitlement,
 The governing rule remains:
 
 > **Geoapify solves the spatial problem. The Car Care platform remains the business authority.**
+
+## Known limitations
+
+- This repository is a sanitized reference implementation, not the complete private Car Care production platform.
+- Live Geoapify requests require your own API key; automated CI does not consume live Geoapify quota.
+- Automated tests use controlled provider responses so routing and Route Matrix behavior remain deterministic and reproducible.
+- Smart Dispatch Route Matrix ranking starts only after the surrounding application has determined driver eligibility.
+- The result of spatial ranking is a recommendation only; final driver assignment remains application-owned.
+- MCP examples are agent-side demonstrations. Production Smart Dispatch uses the direct Geoapify Route Matrix API for deterministic ranking.
+- Production customer data, credentials, private services and proprietary source code are intentionally excluded.
 
 ## Documentation
 
