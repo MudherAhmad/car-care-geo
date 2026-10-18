@@ -303,6 +303,7 @@ Additional documentation lives under `docs/`:
 - `docs/architecture.md` — detailed architecture
 - `docs/tutorial.md` — public walkthrough
 - `docs/ai-workflow.md` — AI workflow and prompt documentation
+- `docs/mcp-setup.md` — Geoapify MCP setup, verification prompts and safety boundaries
 - `docs/geoapify-feedback.md` — Geoapify integration feedback and lessons learned
 
 These are expanded separately from the main README.
