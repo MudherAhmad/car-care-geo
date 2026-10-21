@@ -35,7 +35,7 @@ async function main(): Promise<void> {
   const matrix = new GeoapifyRouteMatrixClient(apiKey);
 
   const pickup = {
-    street: process.env.DEMO_STREET ?? 'Gillesgatan',
+    street: process.env.DEMO_STREET ?? 'Lasarettsboulevarden',
     houseNumber: process.env.DEMO_HOUSE_NUMBER ?? '10',
     postalCode: process.env.DEMO_POSTAL_CODE ?? '29133',
     city: process.env.DEMO_CITY ?? 'Kristianstad',
