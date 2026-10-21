@@ -1,5 +1,7 @@
 # Tutorial
 
+The geospatial APIs used in this walkthrough are provided by [Geoapify](https://www.geoapify.com/).
+
 This walkthrough reproduces the public Car Care Geo geospatial flow from structured address input to validated driving routes and a reproducible Route Matrix driver recommendation.
 
 > **Geoapify solves the spatial problem. The Car Care platform remains the business authority.**
@@ -348,3 +350,22 @@ The complete public walkthrough is:
 At that boundary, Geoapify has solved the spatial problem. The Car Care platform remains responsible for business rules and state changes.
 
 This separation keeps the geospatial integration reproducible, testable and safe to study without exposing the private production platform or customer data.
+
+## 12. Live Geoapify competition demo
+
+The automated tests use deterministic mocked responses. A live walkthrough is also available.
+
+Load the API key from `.env`, then run:
+
+```bash
+set -a
+. ./.env
+set +a
+npm run demo:live
+```
+
+The command performs live geocoding, routing and Route Matrix comparison, then ranks synthetic already-eligible driver candidates.
+
+The final result is a spatial recommendation only. It does not assign a driver or mutate production state.
+
+> Geoapify solves the spatial problem. The Car Care platform remains the business authority.

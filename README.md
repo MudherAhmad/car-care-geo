@@ -1,5 +1,7 @@
 # Car Care Geo
 
+The geospatial capabilities in this reference implementation are powered by [Geoapify](https://www.geoapify.com/).
+
 **Open geospatial reference implementation for intelligent vehicle-care mobility using Geoapify.**
 
 Car Care Geo demonstrates a clean boundary between vehicle-care business logic and geospatial intelligence.
@@ -203,6 +205,25 @@ GEOAPIFY_API_KEY=your_own_geoapify_key
 
 Never commit `.env`.
 
+## Live Geoapify demo
+
+This repository includes a live competition walkthrough using Geoapify.
+
+It demonstrates structured Swedish address validation, Geoapify Geocoding, pickup/return reuse, Geoapify Routing, Geoapify Route Matrix, deterministic Smart Dispatch ranking, and a spatial recommendation without performing driver assignment.
+
+Load your API key from `.env`, then run:
+
+```bash
+set -a
+. ./.env
+set +a
+npm run demo:live
+```
+
+The demo uses public or synthetic locations only. No production customer, booking or driver data is used.
+
+Geoapify provides the spatial evidence. Car Care remains the business authority.
+
 ## Verify the project
 
 Run the automated tests:
@@ -285,7 +306,7 @@ The repository must never contain:
 
 `.env` is ignored by Git.
 
-Release verification also checks that the real production Geoapify key is not present in the public tree or Git history without printing the secret itself.
+Release verification includes an automated scan of tracked files and Git history for likely Geoapify credential patterns without printing candidate secrets.
 
 ## AI boundary
 
