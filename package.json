@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "check:secrets": "node scripts/check-public-secrets.mjs",
+    "demo:live": "npm run build && node dist/src/demo/live-geoapify-demo.js"
   },
   "engines": {
     "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
