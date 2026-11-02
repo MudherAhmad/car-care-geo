@@ -113,3 +113,83 @@ For this project, the resulting architecture is intentionally simple:
 > Geoapify determines spatial facts. Car Care determines what those facts are allowed to change.
 
 That separation made the integration easier to test, reason about and extend safely.
+
+## 6. OpenAPI specification review — 2026-11-02
+
+Review date: 2026-11-02
+Project: Car Care Geo
+
+## Scope
+
+This review examined the official Geoapify OpenAPI 3.1.0 specifications for Forward Geocoding, Routing and Route Matrix.
+
+Official catalog:
+https://apidocs.geoapify.com/assets/openapi/specs/index.json
+
+## Forward Geocoding
+
+Endpoint: GET /geocode/search
+
+The specification documents structured address parameters including street, housenumber, postcode and city.
+
+The reviewed parameters are individually optional. This review did not establish every cross-field validation rule.
+
+## Routing
+
+Endpoint: GET /routing
+
+Required parameters:
+- waypoints
+- mode
+
+The specification documents routing preferences, units and traffic options.
+
+## Route Matrix
+
+Endpoint: POST /routematrix
+
+Request body schema:
+RouteMatrixRequest
+
+Required fields:
+- mode
+- sources
+- targets
+
+The specification describes matrix rows as source locations and columns as target locations.
+
+## Authentication
+
+All three reviewed specifications use OpenAPI 3.1.0 and expose:
+
+- ApiKeyInQuery
+- ApiKeyInHeader
+
+## MCP comparison
+
+Live MCP discovery returned 12 tools.
+
+The MCP calculate_route_matrix tool requires sources and documents defaults for omitted targets and mode.
+
+The REST Route Matrix request schema explicitly requires mode, sources and targets.
+
+This difference is documented behavior, not a confirmed defect.
+
+## Developer feedback
+
+1. Add an end-to-end example connecting structured Geocoding, Routing and Route Matrix.
+2. Explain REST versus MCP parameter defaults side by side.
+3. Provide more examples of strict address matching for operational workflows.
+4. Include failure-handling examples for incomplete geocoding and unavailable matrix cells.
+5. Demonstrate how spatial recommendations remain separate from application-owned business decisions.
+
+## Evidence and limitations
+
+This was a direct review of selected official OpenAPI specification fields, combined with previously verified live REST and MCP tests.
+
+It was not a full OpenAPI conformance audit, generated-client test or exhaustive schema validation.
+
+See also:
+- docs/geoapify-feedback.md
+- docs/mcp-live-verification.md
+- docs/mcp-setup.md

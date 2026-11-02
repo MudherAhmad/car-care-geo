@@ -194,3 +194,77 @@ For the Smart Dispatch example:
 5. Run the Route Matrix Smart Dispatch prompt.
 6. Confirm unavailable tool evidence is not guessed.
 7. Confirm no prompt performs booking or driver-assignment mutation.
+
+## Live MCP verification — 2026-11-02
+
+Verification date: 2026-11-02
+Project: Car Care Geo
+Scope: Public and synthetic geospatial data only.
+
+## 1. Connection and discovery
+
+- REST Geocoding authentication: HTTP 200.
+- MCP initialize: HTTP 200.
+- Negotiated MCP protocol: 2025-06-18.
+- MCP server: geoapify-api-gateway-mcp.
+- MCP tools discovered: 12.
+- Discovery result: PASS.
+
+## 2. Live geocoding
+
+Tool: geocode_address
+Query: Kristianstad, Sweden
+Result: PASS
+
+- Latitude: 56.0293778
+- Longitude: 14.1566859
+- Match type: full_match
+- Confidence: 1
+
+Correction: The first MCP call used the argument text and returned HTTP 400 with the message that query was required. Replacing text with query resolved the issue.
+
+## 3. Live routing
+
+Tool: calculate_route
+Result: PASS
+
+- Mode: drive
+- Distance: 1016 meters
+- Duration: 345.221 seconds
+- Units: metric
+
+These values are tool-returned results for public demonstration coordinates, not production booking data.
+
+## 4. Live Route Matrix
+
+Tool: calculate_route_matrix
+Result: PASS
+
+Three synthetic driver sources were compared with one pickup target.
+
+| Driver | Distance (m) | Duration (s) |
+| --- | ---: | ---: |
+| driver-a | 654 | 206 |
+| driver-b | 2355 | 585 |
+| driver-c | 1024 | 308 |
+
+Recommended spatial candidate: driver-a.
+
+The ranking uses the lowest road ETA, with distance as the tie-breaker. This is a spatial recommendation only; no driver was assigned.
+
+## 5. Architecture and safety
+
+- The public Car Care Geo application uses Geoapify REST APIs directly.
+- MCP was tested separately as an agent-side geospatial interface.
+- MCP was not connected to production booking or driver-assignment mutations.
+- Only public or synthetic locations were used.
+- API credentials are not included in this document.
+- No production Car Care changes were performed.
+
+## 6. Evidence limitations
+
+These results were observed during interactive Ubuntu Terminal tests. They are not a claim that every Geoapify MCP tool was exercised.
+
+The verified tools are geocode_address, calculate_route and calculate_route_matrix. Tool discovery confirmed 12 available tools.
+
+Live route times and distances can change between requests. The values above are recorded observations, not permanent route guarantees.
