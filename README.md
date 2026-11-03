@@ -16,6 +16,14 @@ This repository is a public, sanitized reference implementation derived from the
 
 Geoapify supports the geospatial implementation through geocoding, routing and Route Matrix. Product AI capabilities and development-tool assistance are separate roles, explained in [AI workflow](docs/ai-workflow.md).
 
+## Competition Videos
+
+1. [Video 1 — Geospatial Demo](https://www.youtube.com/watch?v=46q7W1USbkk)
+2. [Video 2 — Technical Walkthrough](https://www.youtube.com/watch?v=dMACJ44r7fw)
+3. [Video 3 — Car Care Sverige Platform Overview](https://www.youtube.com/watch?v=uyLwgvdnLgw)
+
+These recorded presentations complement the runnable demo and documentation below.
+
 ## Why this project exists
 
 Mobile vehicle care combines several different problems:
