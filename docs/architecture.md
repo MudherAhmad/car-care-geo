@@ -70,3 +70,23 @@ The private production repository is not part of this repository.
 Production customer data, credentials, database access, booking records and proprietary application services are intentionally excluded.
 
 The public repository reproduces only the sanitized geospatial boundary needed to understand, test and review the Geoapify integration.
+
+## Booking address entry and verification — November 2026
+
+The private booking improvement adds an entry-stage flow before the existing geospatial and business-authority boundaries:
+
+- Context-aware Geoapify autocomplete is requested through the application backend with Sweden-restricted results. Credentials remain server-side; the client receives only the suggestion components needed for entry.
+- Debouncing and request revisions prevent older suggestions from replacing results for newer input or changed structured context. Selecting a suggestion populates provider-returned fields without inventing an address.
+- Complete pickup and, where different, return addresses are verified before checkout. Same-return reuse is tied to current pickup verification. Edits invalidate that verification, and late responses cannot authorize progression.
+- Swedish errors, loading, empty-result and temporary-failure states remain inline. Optional apartment or floor information stays outside geocoding components.
+- Prevalidation produces address evidence without creating a booking or changing payment, membership, capacity or assignment state. Final server-side validation remains required at booking creation.
+
+A suggested postal code may exist while still being incompatible with the rest of the address. Autocomplete and whole-address acceptance therefore remain separate contracts. Provider unavailability is also distinct from an address mismatch.
+
+This is documentation of the private application's improvement, not a claim that its application code or customer data is included in the public reference.
+
+## Nexus future integration boundary
+
+A future Nexus integration could consume sanitized, application-approved spatial summaries to explain address problems, route distance or ETA. No direct Geoapify-to-Nexus production integration is asserted here.
+
+Nexus or another AI interface must not infer business permission from spatial evidence. Existing deterministic services retain authorization, booking, payment, membership, time, capacity and driver-assignment authority. Any future action interface requires its own reviewed permissions and validation; autocomplete or an AI explanation cannot bypass those controls.
