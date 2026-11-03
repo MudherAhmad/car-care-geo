@@ -310,13 +310,7 @@ Release verification includes an automated scan of tracked files and Git history
 
 ## AI boundary
 
-AI can assist with interpretation, explanation and spatial exploration.
-
-AI is not the production authority for booking mutation, membership entitlement, workshop capacity or driver assignment.
-
-The governing rule remains:
-
-> **Geoapify solves the spatial problem. The Car Care platform remains the business authority.**
+Agent-facing explanations do not authorize booking, payment, membership, capacity or driver-assignment changes. Development assistance, representative prompts and review checks are documented in [AI workflow](docs/ai-workflow.md).
 
 ## Known limitations
 
