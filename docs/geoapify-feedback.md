@@ -1,6 +1,6 @@
 # Geoapify Feedback and Lessons
 
-This document summarizes the practical lessons learned while integrating Geoapify into an AI-assisted vehicle-care workflow.
+This document summarizes the practical lessons learned while integrating Geoapify into the Car Care vehicle-care workflow.
 
 The most important architectural lesson was:
 
