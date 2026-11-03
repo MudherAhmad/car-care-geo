@@ -1,26 +1,22 @@
 # AI Workflow
 
-This document explains how AI-assisted development was used to design, review and validate the public Car Care Geo integration.
+This document records the development workflow, representative prompts and verification checks for Car Care Geo.
 
-The workflow combines human engineering decisions with ChatGPT/Codex-assisted reasoning and Geoapify geospatial tooling.
+Mudher Ahmad owns the project and its engineering decisions. ChatGPT/Codex, including ChatGPT Work, assisted with analysis, implementation, test preparation and documentation. Proposed changes were checked against source code, tests and runtime evidence; developer review and acceptance remained necessary.
 
 > **Geoapify solves the spatial problem. The Car Care platform remains the business authority.**
 
 ## 1. Role of AI in the project
 
-AI was used as an engineering assistant for:
+The development support covered:
 
-- architecture review and decomposition
-- translating product requirements into implementation steps
-- reviewing Geoapify integration boundaries
-- generating and refining test ideas
-- identifying edge cases and failure modes
-- reviewing privacy and security constraints
-- documenting reproducible implementation decisions
+- requirements, architecture and integration-boundary review
+- implementation proposals and edge-case analysis
+- test preparation and privacy checks
+- documentation of reproducible decisions
 
-AI does not own booking, pricing, membership, capacity, payment or driver-assignment authority.
+This development role is separate from AI features inside the product. Booking, pricing, membership, capacity, payment and driver assignment remain application-owned.
 
-AI suggestions are treated as proposals. Source code, tests, runtime evidence and human review remain authoritative.
 ## 2. Prompt structure
 
 Prompts were kept narrow and auditable. A typical engineering prompt contained four parts:
@@ -55,7 +51,7 @@ This structure reduced broad speculative answers and made AI output easier to co
 
 ## 3. Human review and correction loop
 
-AI output was never accepted only because it looked plausible. Each suggestion passed through a review loop:
+Each proposed change passed through a review loop:
 
 1. compare the suggestion with the current source code
 2. check the proposed responsibility against the architecture boundary
@@ -72,8 +68,6 @@ Representative corrections made during the project included:
 - preventing supplementary AI/MCP flows from mutating production booking or assignment state
 - avoiding raw production customer addresses and coordinates in AI prompts
 - requiring route and address behavior to be proven by deterministic tests rather than by AI explanation alone
-
-The acceptance rule was simple: an AI suggestion could accelerate analysis, but it could not replace repository evidence or human approval.
 
 
 ## 4. Geoapify and AI boundary in practice
@@ -152,7 +146,7 @@ Guardrail: deterministic tests, TypeScript build results, repository diffs and r
 
 ## 6. Verification and evidence loop
 
-Every AI-assisted change is closed with deterministic evidence rather than an AI confidence statement.
+Verification relies on executable checks and observed results.
 
 For the public repository, the verification sequence is:
 
@@ -235,27 +229,15 @@ Return:
 
 These prompts deliberately constrain the assistant to repository evidence, explicit authority boundaries and testable outputs.
 
-## 8. End-to-end AI-assisted engineering loop
+## 8. Publication and privacy
 
-The complete workflow used for this public project is:
+The review loop in Section 3 and verification commands in Section 6 govern publication. Only validated, sanitized material is included in the public competition repository.
 
-1. a human defines the objective and the non-negotiable architecture boundary
-2. the AI assistant inspects repository evidence before proposing changes
-3. Geoapify responsibilities are separated from Car Care business authority
-4. the assistant proposes the smallest testable implementation or documentation change
-5. a human reviews the proposal and rejects invented APIs, unsafe authority changes or unnecessary scope
-6. deterministic tests and TypeScript build checks validate the implementation
-7. Git diff review confirms that only the intended files changed
-8. GitHub Actions repeats the reproducibility checks on the supported Node.js matrix
-9. only validated, sanitized material is published in the public competition repository
+The prompts here are condensed examples, not full private chat transcripts. They preserve the engineering intent and constraints without publishing secrets, raw production customer data or private source code.
 
-The representative prompts in this document are intentionally sanitized and condensed. They preserve the engineering intent, constraints and review pattern without publishing secrets, raw production customer data, private repository details or full private chat transcripts.
+## 9. Booking address correction process — November 2026
 
-This workflow uses AI to accelerate engineering analysis while keeping security, privacy, business authority and final acceptance under deterministic application controls and human review.
-
-## 9. ChatGPT Work correction process — November 2026
-
-The booking address improvement was developed through an iterative ChatGPT Work-assisted process. The original problem was delayed feedback: customers could reach a later booking action before discovering an address mismatch.
+The booking address work followed the development process described above. The original problem was delayed feedback: customers could reach a later booking action before discovering an address mismatch.
 
 The correction loop included practical mistakes and constraints:
 
@@ -279,6 +261,6 @@ Do not mutate business state during address prevalidation.
 Separate automated evidence from live customer acceptance.
 ```
 
-ChatGPT Work assisted analysis, implementation and correction; Geoapify supplied address evidence. Neither AI explanation nor autocomplete replaced deterministic validation. This address case does not claim that MCP performed the production checks; the existing MCP and OpenAPI evidence has its own documented scope.
+Geoapify supplied address evidence; autocomplete did not replace complete-address validation. This case does not claim that MCP performed the production checks; the existing MCP and OpenAPI evidence has its own documented scope.
 
 Future Nexus integration may explain sanitized address or route results through reviewed interfaces. It must remain a proposed integration boundary, not a claim of a shipped Geoapify-to-Nexus connection or permission for an agent to change bookings, payments, memberships, capacity or driver assignment.
