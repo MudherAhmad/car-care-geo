@@ -369,3 +369,22 @@ The command performs live geocoding, routing and Route Matrix comparison, then r
 The final result is a spatial recommendation only. It does not assign a driver or mutate production state.
 
 > Geoapify solves the spatial problem. The Car Care platform remains the business authority.
+
+## 13. November 2026 production booking address lesson
+
+This section describes an observed improvement in the private application. It does not add a Flutter booking interface or autocomplete endpoint to this public repository; the runnable public walkthrough above remains the reproducible reference.
+
+The customer-facing sequence is:
+
+1. Type a Swedish street, city, postal code or house number. Debounced, Sweden-restricted Geoapify autocomplete uses the other structured fields as context.
+2. Select a provider suggestion to fill the available structured components. Do not invent missing house numbers. Apartment or floor remains optional and separate from geocoding.
+3. Verify the complete pickup address before advancing to checkout. A separate return address requires its own verification; an unchanged same-address return can reuse pickup verification.
+4. Keep an unverified address on the same step, showing a Swedish inline correction message beside the address group. Loading, empty suggestions and temporary network errors have distinct inline states.
+5. Invalidate verification after edits or return-address changes. Discard stale autocomplete and verification responses.
+6. Retain final server-side address validation when creating the booking.
+
+Autocomplete helps with entry; it does not guarantee that a street, house number, postal code and city form a valid combination. A temporary provider failure should offer a retry rather than label the address definitively incorrect.
+
+For a demonstration, use a non-sensitive test address: show suggestions and component filling, deliberately change one component, show rejection before checkout, then correct it and advance to payment selection. Do not create a booking or charge a payment merely to demonstrate address validation.
+
+The owner observed this sequence on the live mobile application in November 2026. Separate return-address, stale-response and failure cases should be distinguished from that manual observation and supported by targeted tests. Prevalidation itself must not mutate bookings, payments, memberships, capacity or driver assignment. API credentials stay on the server.
