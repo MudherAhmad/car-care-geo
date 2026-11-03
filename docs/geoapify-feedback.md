@@ -193,3 +193,17 @@ See also:
 - docs/geoapify-feedback.md
 - docs/mcp-live-verification.md
 - docs/mcp-setup.md
+
+## 7. Booking address case study — November 2026
+
+The production booking flow exposed an important usability problem: an incorrect street or postal code could survive the address step and fail only later, when the customer attempted to create the booking.
+
+Geoapify autocomplete now provides Sweden-restricted, context-aware suggestions. Selecting a suggestion fills the structured components actually returned by the provider; a suggestion is not proof that the complete address is valid. Street-level results can cover several postal codes, and house-number coverage depends on the underlying data.
+
+Early verification now runs before checkout. An unresolved or mismatched pickup address keeps the customer on the address step with a Swedish inline message. A different return address is checked independently; the same return address can reuse current pickup verification. Edits invalidate previous verification, and stale responses cannot advance the flow. Final server-side validation remains in place.
+
+The owner reported a live mobile check in which suggestions appeared, an intentionally incorrect postal code was rejected on the address page, and correcting it allowed progression to payment selection. This is evidence of those observed cases, not proof of every address or of a completed payment.
+
+Reported targeted implementation checks passed: 31 backend tests across five Jest suites, TypeScript checking, 13 Flutter tests and a web build. Dart analysis reported nine informational findings and zero errors. These are private implementation results; the public reference suite remains separate.
+
+Useful provider documentation additions would include examples distinguishing autocomplete suggestions from strict whole-address verification, partial house-number coverage, and temporary upstream failure from an address mismatch. This case study does not extend the scope of the OpenAPI review above or claim new MCP verification.

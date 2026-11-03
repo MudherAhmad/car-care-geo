@@ -252,3 +252,33 @@ The complete workflow used for this public project is:
 The representative prompts in this document are intentionally sanitized and condensed. They preserve the engineering intent, constraints and review pattern without publishing secrets, raw production customer data, private repository details or full private chat transcripts.
 
 This workflow uses AI to accelerate engineering analysis while keeping security, privacy, business authority and final acceptance under deterministic application controls and human review.
+
+## 9. ChatGPT Work correction process — November 2026
+
+The booking address improvement was developed through an iterative ChatGPT Work-assisted process. The original problem was delayed feedback: customers could reach a later booking action before discovering an address mismatch.
+
+The correction loop included practical mistakes and constraints:
+
+- Inspect the actual current production source rather than treat an old ZIP as authoritative. When the repository HEAD advanced, stop and reconcile the change before applying the scoped address patch.
+- Preserve concurrent Nexus work, including shared API-file additions, while limiting the implementation to booking addresses.
+- Keep shell instructions appropriate to the terminal. PowerShell commands pasted into Bash failed, and a missing local upload had to be corrected before server-side review could run.
+- Use isolated tests as implementation evidence, then require acceptance in the original application. A synthetic review harness did not satisfy the owner's need to see the existing booking experience with its normal context.
+- Review exact diffs and backups, run focused checks, and distinguish backend deployment, frontend availability and customer-observed behavior.
+
+The reported implementation evidence was five Jest suites with 31 passing tests, TypeScript checking, 13 Flutter tests and a successful web build. Dart analysis had zero errors and nine informational findings. The owner's subsequent live mobile check confirmed suggestions, same-page rejection of an intentionally incorrect postal code, and progression to payment selection after correction. It did not establish a completed payment or exhaustive acceptance of all edge cases.
+
+Representative sanitized correction prompt:
+
+```text
+Improve the existing booking address step using current source.
+Reuse Geoapify services; restrict suggestions to Sweden.
+Fill only provider-returned components and verify before checkout.
+Keep errors inline, reject stale responses, and invalidate verification on edits.
+Preserve final server validation and unrelated concurrent work.
+Do not mutate business state during address prevalidation.
+Separate automated evidence from live customer acceptance.
+```
+
+ChatGPT Work assisted analysis, implementation and correction; Geoapify supplied address evidence. Neither AI explanation nor autocomplete replaced deterministic validation. This address case does not claim that MCP performed the production checks; the existing MCP and OpenAPI evidence has its own documented scope.
+
+Future Nexus integration may explain sanitized address or route results through reviewed interfaces. It must remain a proposed integration boundary, not a claim of a shipped Geoapify-to-Nexus connection or permission for an agent to change bookings, payments, memberships, capacity or driver assignment.
