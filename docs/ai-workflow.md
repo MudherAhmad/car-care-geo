@@ -2,11 +2,21 @@
 
 This document records the development workflow, representative prompts and verification checks for Car Care Geo.
 
-Mudher Ahmad owns the project and its engineering decisions. ChatGPT/Codex, including ChatGPT Work, assisted with analysis, implementation, test preparation and documentation. Proposed changes were checked against source code, tests and runtime evidence; developer review and acceptance remained necessary.
+Mudher Ahmad is the sole developer and project creator. The product concept, requirements, architecture choices and integration decisions are his. He selects and integrates the models, agents and external services, and remains responsible for reviewing changes and accepting results.
 
 > **Geoapify solves the spatial problem. The Car Care platform remains the business authority.**
 
-## 1. Role of AI in the project
+## 1. Product AI and development assistance
+
+### 1.1 AI inside the product
+
+The broader private platform uses OpenAI-backed language and speech capabilities for translation, speech-to-text transcription, text classification and breaking requests into structured tasks. Mudher selects and integrates these capabilities and the associated agent workflows into his product design.
+
+These are product functions, distinct from the tools used to build and document the project. This public repository reproduces the geospatial reference only; it does not expose every private AI feature or establish acceptance of each private workflow. The proposed Geoapify-to-Nexus integration remains future work, as described in [Architecture](architecture.md#nexus-future-integration-boundary).
+
+### 1.2 Development assistance
+
+ChatGPT/Codex assisted with analysis, implementation, test preparation and documentation. This support did not transfer project ownership or engineering responsibility.
 
 The development support covered:
 
