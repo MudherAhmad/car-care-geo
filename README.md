@@ -10,6 +10,12 @@ Car Care Geo demonstrates a clean boundary between vehicle-care business logic a
 
 This repository is a public, sanitized reference implementation derived from the private Car Care Sverige production platform.
 
+## Project creator and developer
+
+**Mudher Ahmad is the sole developer and creator of Car Care Geo and the broader Car Care Sverige project.** The product concept, requirements and integration decisions are his. He selects and integrates the models, agents and services used in the platform.
+
+Geoapify supports the geospatial implementation through geocoding, routing and Route Matrix. Product AI capabilities and development-tool assistance are separate roles, explained in [AI workflow](docs/ai-workflow.md).
+
 ## Why this project exists
 
 Mobile vehicle care combines several different problems:
@@ -310,13 +316,7 @@ Release verification includes an automated scan of tracked files and Git history
 
 ## AI boundary
 
-AI can assist with interpretation, explanation and spatial exploration.
-
-AI is not the production authority for booking mutation, membership entitlement, workshop capacity or driver assignment.
-
-The governing rule remains:
-
-> **Geoapify solves the spatial problem. The Car Care platform remains the business authority.**
+Agent-facing explanations do not authorize booking, payment, membership, capacity or driver-assignment changes. Development assistance, representative prompts and review checks are documented in [AI workflow](docs/ai-workflow.md).
 
 ## Known limitations
 
